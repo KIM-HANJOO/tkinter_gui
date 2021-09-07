@@ -31,7 +31,29 @@ import easygui as eg
 #########################################################################################
 
 # save location
-saveloc = 'C:\\Users\\joo09\\Documents\\GitHub\\tkinter_gui\\saved_excel'
+# saveloc = 'C:\\Users\\joo09\\Documents\\GitHub\\tkinter_gui\\saved_excel'
+
+
+#########################################################################################
+######################################## < theme > ######################################
+
+
+# root.tk.call("source", "sun-valley.tcl")
+# root.tk.call("set_theme", "light")
+
+# def change_theme():
+#     # NOTE: The theme's real name is sun-valley-<mode>
+#     if root.tk.call("ttk::style", "theme", "use") == "sun-valley-dark":
+#         # Set light theme
+#         root.tk.call("set_theme", "light")
+#     else:
+#         # Set dark theme
+#         root.tk.call("set_theme", "dark")
+
+# # Remember, you have to use ttk widgets
+# button = ttk.Button(big_frame, text="Change theme!", command=change_theme)
+# button.pack()
+
 
 #########################################################################################
 ###################################### < excel read > ###################################
@@ -53,8 +75,8 @@ def delun(df) :
 #########################################################################################
 ######################################## < button > #####################################
 
-def savebutton() :
-    savebutton = Button(root, command = fastsave(), text = 'save')
+# def savebutton() :
+#     savebutton = Button(root, command = fastsave(), text = 'save')
     
 
 
@@ -98,15 +120,17 @@ def fastsave(df, saveloc) :
 ######################################### < init > ######################################
 
 def init_load(saveloc) :
-    for file in os.listdir(saveloc) :
-    
-        if 'lastfile.xlsx' in file :
-            lastdf = read_excel(file)
-            lastname = lastdf.loc[0, 'name']
+    os.chdir(saveloc)
+    if 'lastfile.xlsx' in os.listdir(saveloc) :
+        lastdf = read_excel('lastfile.xlsx')
+        lastname = lastdf.loc[0, 'name']
+        if lastname in os.listdir(saveloc) :
             df = read_excel(lastname)
-            
         else :
             df = read_excel('sample.xlsx')
+        
+    else :
+        df = read_excel('sample.xlsx')
 
     return df
 
